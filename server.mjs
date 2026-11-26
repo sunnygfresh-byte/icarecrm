@@ -1,5 +1,6 @@
 import http from 'node:http';
 import { cloudConfig, configResponse } from './lib/config.mjs';
+import {verifySession} from './functions/api/session.js';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
@@ -21,6 +22,7 @@ function matchesMime(b,m){return m==='image/jpeg'?b.length>3&&b[0]===255&&b[1]==
 async function callCloud(cfg,action,params,fetcher){const data=new FormData();for(const [k,v] of Object.entries(params)){if(v instanceof Blob)data.append(k,v,'image.webp');else data.append(k,String(v));}let r;try{r=await fetcher(`https://api.cloudinary.com/v1_1/${cfg.cloud}/image/${action}`,{method:'POST',headers:{Authorization:'Basic '+Buffer.from(cfg.key+':'+cfg.secret).toString('base64')},body:data,redirect:'error',signal:AbortSignal.timeout(90000)})}catch{fail(502,'Unable to reach Cloudinary. Check your internet connection.');}if(!r.ok)fail(502,`Cloudinary rejected the ${action} request (HTTP ${r.status}). Verify your cloud name, credentials, and account settings.`);try{return await r.json()}catch{fail(502,'Unexpected Cloudinary response.');}}
 export function makeServer({fetcher=fetch,getConfig=config}={}){let active=0;return http.createServer(async(req,res)=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.setHeader('Referrer-Policy','no-referrer');let counted=false;try{
  if(req.headers.host!==`${HOST}:${PORT}`)fail(403,'Local connector only.');
+ if(req.url==='/api/session'){const headers=new Headers();for(const [k,v] of Object.entries(req.headers))if(typeof v==='string')headers.set(k,v);const result=await verifySession(new Request(ORIGIN+'/api/session',{method:req.method,headers}),process.env,fetcher);json(res,result.status,await result.json());return;}
  if(req.method==='GET'&&req.url==='/api/config'){const r=configResponse(process.env);json(res,r.status,await r.json());return;}
  if(req.method==='GET'&&(req.url==='/'||req.url==='/index.html')){const page=await readFile(new URL('./public/index.html',import.meta.url));res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});res.end(page);return;}
  if(req.method==='GET'&&req.url==='/firebase-crm.js'){let code;try{code=await readFile(new URL('./firebase-crm.js',import.meta.url));}catch{fail(503,'Build Firebase first: npm install, then npm run build.');}res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8'});res.end(code);return;}

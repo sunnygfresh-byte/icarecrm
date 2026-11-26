@@ -10,5 +10,5 @@ assert.match(html, /<!doctype html>/i);
 assert.ok(html.includes('/api/config') && html.includes('/api/cloudinary/'));
 const routes = JSON.parse(await readFile(new URL('public/_routes.json',root),'utf8'));
 assert.deepEqual(routes, {version:1,include:['/api/*'],exclude:[]});
-for (const file of ['functions/api/config.js','functions/api/cloudinary/[action].js']) assert.ok((await stat(new URL(file,root))).isFile());
+for (const file of ['functions/api/config.js','functions/api/session.js','functions/api/cloudinary/[action].js','functions/api/reporting/[action].js']) assert.ok((await stat(new URL(file,root))).isFile());
 console.log('iCare CRM: public static files and API route files verified. No build required.');

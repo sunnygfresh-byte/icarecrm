@@ -1,12 +1,12 @@
 {
   "name": "icare-crm",
-  "version": "2.7.0",
+  "version": "3.1.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "esbuild firebase-crm.mjs --bundle --format=esm --platform=browser --outfile=firebase-crm.js",
     "start": "node --env-file-if-exists=.env server.mjs",
-    "test": "node --test --test-concurrency=1 test.mjs firebase-sync.test.mjs webp-upload.test.mjs pages.test.mjs"
+    "test": "node --test --test-concurrency=1 test.mjs firebase-sync.test.mjs webp-upload.test.mjs pages.test.mjs persistent-sync.test.mjs realtime-sync.test.mjs csv.test.mjs reporting.test.mjs vault.test.mjs xlsx.test.mjs vault-adapter.test.mjs"
   },
   "dependencies": {
     "firebase": "^12.0.0"
