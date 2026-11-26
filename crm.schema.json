@@ -1,0 +1,740 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "iCare Fitness CRM workspace v1",
+  "description": "Runtime additionally checks unique IDs, client/form references, valid calendar dates and attachment byte lengths. Optional v1.6 contact fields; existing schemaVersion 1 backups remain accepted.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "exportedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "training": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,100}$",
+        "not": {
+          "enum": [
+            "__proto__",
+            "constructor",
+            "prototype"
+          ]
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/training"
+      }
+    },
+    "clients": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/client"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/note"
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/resource"
+      }
+    },
+    "progress": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/progress"
+      }
+    },
+    "forms": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/form"
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "training",
+    "clients",
+    "events",
+    "notes",
+    "resources",
+    "progress",
+    "forms"
+  ],
+  "$defs": {
+    "client": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "program": {
+          "type": "string"
+        },
+        "goal": {
+          "type": "string"
+        },
+        "startDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "status": {
+          "enum": [
+            "Lead",
+            "Onboarding",
+            "Active",
+            "Paused",
+            "Completed"
+          ]
+        },
+        "health": {
+          "enum": [
+            "On track",
+            "Needs attention",
+            "At risk",
+            "Not assessed"
+          ]
+        },
+        "support": {
+          "enum": [
+            "Self-guided",
+            "Supported",
+            "Premium"
+          ]
+        },
+        "photoConsent": {
+          "enum": [
+            "Not recorded",
+            "Granted",
+            "Declined"
+          ]
+        },
+        "address": {
+          "type": "string"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "province": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "homePhone": {
+          "type": "string"
+        },
+        "workPhone": {
+          "type": "string"
+        },
+        "workEmail": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "occupation": {
+          "type": "string"
+        },
+        "instagram": {
+          "type": "string"
+        },
+        "facebook": {
+          "type": "string"
+        },
+        "linkedin": {
+          "type": "string"
+        },
+        "otherSocial": {
+          "type": "string"
+        },
+        "preferredContact": {
+          "type": "string"
+        },
+        "contactNotes": {
+          "type": "string"
+        },
+        "profilePhoto": {
+          "type": "string",
+          "maxLength": 500000,
+          "pattern": "^(?:$|data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$)",
+          "description": "Optional locally resized JPEG profile photo data URL; empty string removes photo."
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "name",
+        "email",
+        "phone",
+        "program",
+        "goal",
+        "startDate",
+        "status",
+        "health",
+        "support",
+        "photoConsent"
+      ],
+      "additionalProperties": true
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clientId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "title": {
+          "type": "string"
+        },
+        "time": {
+          "type": "string",
+          "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$|^$"
+        },
+        "type": {
+          "enum": [
+            "Consultation",
+            "Check-in",
+            "Training",
+            "Review",
+            "Follow-up",
+            "Other"
+          ]
+        },
+        "status": {
+          "enum": [
+            "Scheduled",
+            "Complete",
+            "Cancelled"
+          ]
+        },
+        "details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "clientId",
+        "date",
+        "title",
+        "time",
+        "type",
+        "status",
+        "details"
+      ],
+      "additionalProperties": true
+    },
+    "note": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clientId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "title": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "clientId",
+        "date",
+        "title",
+        "body",
+        "category"
+      ],
+      "additionalProperties": true
+    },
+    "resource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clientId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "Progress photo",
+            "Journey form",
+            "Training program",
+            "Nutrition",
+            "Education",
+            "Other"
+          ]
+        },
+        "filename": {
+          "type": "string"
+        },
+        "mime": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string",
+          "contentEncoding": "base64",
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 15728640
+        },
+        "description": {
+          "type": "string"
+        },
+        "formId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_-]{1,100}$",
+              "not": {
+                "enum": [
+                  "__proto__",
+                  "constructor",
+                  "prototype"
+                ]
+              }
+            },
+            {
+              "const": ""
+            }
+          ]
+        },
+        "cloudCopy": {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "mime": {
+              "const": "image/webp"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15728640
+            }
+          },
+          "required": [
+            "asset",
+            "mime",
+            "size"
+          ],
+          "description": "Optional identifier for a compressed Cloudinary copy; original local attachment unchanged."
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "clientId",
+        "date",
+        "title",
+        "type",
+        "filename",
+        "mime",
+        "data",
+        "size",
+        "description",
+        "formId"
+      ],
+      "additionalProperties": true
+    },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clientId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "week": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16
+        },
+        "weight": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1500
+        },
+        "weightUnit": {
+          "enum": [
+            "lb",
+            "kg"
+          ]
+        },
+        "waist": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 300
+        },
+        "adherence": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "sleep": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 24
+        },
+        "energy": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 10
+        },
+        "wins": {
+          "type": "string"
+        },
+        "barriers": {
+          "type": "string"
+        },
+        "review": {
+          "type": "string"
+        },
+        "nextSteps": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "clientId",
+        "date",
+        "week",
+        "weight",
+        "weightUnit",
+        "waist",
+        "adherence",
+        "sleep",
+        "energy",
+        "wins",
+        "barriers",
+        "review",
+        "nextSteps"
+      ],
+      "additionalProperties": true
+    },
+    "form": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "clientId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{1,100}$",
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "Application",
+            "Onboarding",
+            "Health screening",
+            "Weekly check-in",
+            "Phase review",
+            "Completion",
+            "Other"
+          ]
+        },
+        "status": {
+          "enum": [
+            "Pending",
+            "Received",
+            "Reviewed"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "answers": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "createdAt",
+        "updatedAt",
+        "clientId",
+        "date",
+        "title",
+        "type",
+        "status",
+        "summary",
+        "answers"
+      ],
+      "additionalProperties": true
+    },
+    "training": {
+      "type": "object",
+      "required": [
+        "logs",
+        "assess"
+      ],
+      "properties": {
+        "logs": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(?:[1-9]|1[0-6])-[01345]$"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": [
+                "string",
+                "number",
+                "boolean",
+                "null"
+              ]
+            }
+          }
+        },
+        "assess": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

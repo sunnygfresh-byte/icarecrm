@@ -1,4 +1,5 @@
 import http from 'node:http';
+import { cloudConfig, configResponse } from './lib/config.mjs';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
@@ -11,7 +12,7 @@ const MIME=/^image\/(jpeg|png|gif|webp)$/;
 const assetPattern=/^[a-f0-9]{64}$/;
 class HttpError extends Error{constructor(status,message){super(message);this.status=status;}}
 function fail(status,message){throw new HttpError(status,message)}
-function config(){const cloud=process.env.CLOUDINARY_CLOUD_NAME||'SRLWQCQX', key=process.env.CLOUDINARY_API_KEY||'',secret=process.env.CLOUDINARY_API_SECRET||'';return {cloud,key,secret,configured:/^[A-Za-z0-9_-]+$/.test(cloud)&&/^\d+$/.test(key)&&!!secret&&!secret.startsWith('replace_')};}
+function config(){return cloudConfig(process.env);}
 function json(res,status,data){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(JSON.stringify(data));}
 async function readJson(req){if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))fail(415,'Expected JSON request.');if(Number(req.headers['content-length'])>MAX_JSON)fail(413,'Image is too large.');let parts=[],n=0;for await(const chunk of req){n+=chunk.length;if(n>MAX_JSON)fail(413,'Image is too large.');parts.push(chunk)}let v;try{v=JSON.parse(Buffer.concat(parts).toString('utf8'))}catch{fail(400,'Invalid JSON.')};if(!v||typeof v!=='object'||Array.isArray(v))fail(400,'Invalid request.');return v;}
 export function assetId(recordId,bytes){return createHash('sha256').update(recordId+'\n').update(bytes).digest('hex');}
@@ -20,6 +21,7 @@ function matchesMime(b,m){return m==='image/jpeg'?b.length>3&&b[0]===255&&b[1]==
 async function callCloud(cfg,action,params,fetcher){const data=new FormData();for(const [k,v] of Object.entries(params)){if(v instanceof Blob)data.append(k,v,'image.webp');else data.append(k,String(v));}let r;try{r=await fetcher(`https://api.cloudinary.com/v1_1/${cfg.cloud}/image/${action}`,{method:'POST',headers:{Authorization:'Basic '+Buffer.from(cfg.key+':'+cfg.secret).toString('base64')},body:data,redirect:'error',signal:AbortSignal.timeout(90000)})}catch{fail(502,'Unable to reach Cloudinary. Check your internet connection.');}if(!r.ok)fail(502,`Cloudinary rejected the ${action} request (HTTP ${r.status}). Verify your cloud name, credentials, and account settings.`);try{return await r.json()}catch{fail(502,'Unexpected Cloudinary response.');}}
 export function makeServer({fetcher=fetch,getConfig=config}={}){let active=0;return http.createServer(async(req,res)=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.setHeader('Referrer-Policy','no-referrer');let counted=false;try{
  if(req.headers.host!==`${HOST}:${PORT}`)fail(403,'Local connector only.');
+ if(req.method==='GET'&&req.url==='/api/config'){const r=configResponse(process.env);json(res,r.status,await r.json());return;}
  if(req.method==='GET'&&(req.url==='/'||req.url==='/index.html')){const page=await readFile(new URL('./index.html',import.meta.url));res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});res.end(page);return;}
  if(req.method==='GET'&&req.url==='/firebase-crm.js'){let code;try{code=await readFile(new URL('./firebase-crm.js',import.meta.url));}catch{fail(503,'Build Firebase first: npm install, then npm run build.');}res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8'});res.end(code);return;}
  if(req.method!=='POST'||!/^\/api\/cloudinary\/(status|upload|download|delete)$/.test(req.url||''))fail(404,'Not found.');
