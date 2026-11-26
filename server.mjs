@@ -22,7 +22,7 @@ async function callCloud(cfg,action,params,fetcher){const data=new FormData();fo
 export function makeServer({fetcher=fetch,getConfig=config}={}){let active=0;return http.createServer(async(req,res)=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.setHeader('Referrer-Policy','no-referrer');let counted=false;try{
  if(req.headers.host!==`${HOST}:${PORT}`)fail(403,'Local connector only.');
  if(req.method==='GET'&&req.url==='/api/config'){const r=configResponse(process.env);json(res,r.status,await r.json());return;}
- if(req.method==='GET'&&(req.url==='/'||req.url==='/index.html')){const page=await readFile(new URL('./index.html',import.meta.url));res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});res.end(page);return;}
+ if(req.method==='GET'&&(req.url==='/'||req.url==='/index.html')){const page=await readFile(new URL('./public/index.html',import.meta.url));res.writeHead(200,{'Content-Type':'text/html; charset=utf-8'});res.end(page);return;}
  if(req.method==='GET'&&req.url==='/firebase-crm.js'){let code;try{code=await readFile(new URL('./firebase-crm.js',import.meta.url));}catch{fail(503,'Build Firebase first: npm install, then npm run build.');}res.writeHead(200,{'Content-Type':'text/javascript; charset=utf-8'});res.end(code);return;}
  if(req.method!=='POST'||!/^\/api\/cloudinary\/(status|upload|download|delete)$/.test(req.url||''))fail(404,'Not found.');
  if(req.headers.origin!==ORIGIN||(req.headers['sec-fetch-site']&&req.headers['sec-fetch-site']!=='same-origin'))fail(403,'Requests must originate from the local CRM.');
