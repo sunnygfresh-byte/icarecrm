@@ -12,3 +12,5 @@ test('formal 8px mobile tokens and safe-area accessibility exceptions are presen
 test('dedicated mobile pages reuse original module views with no secondary storage',()=>{assert.match(html,/programs:\(\)=>progress\('programs'\)/);assert.match(html,/training:\(\)=>progress\('mobiletraining'\)/);assert.match(html,/if\(workspaceMobile\(\)\)return workspaceMobileView\(c\)/);});
 
 test('all mobile module icons have inline SVG and recognized routes',()=>{const c=harness(true);const result=vm.runInContext("mobileModules.every(([m,label,icon])=>workspaceKnownModule(m)&&Boolean(mobileIconPaths[icon])&&mobileIcon(icon).includes('<svg'))",c);assert.equal(result,true);});
+
+test('mobile URLs round-trip imported identifiers and reject malformed escapes',()=>{const c=harness(true);assert.equal(c.workspaceRoute(c.workspaceURL('client.with spaces:é','photos')).id,'client.with spaces:é');assert.equal(c.workspaceRoute('#/clients/%ZZ/overview'),null);assert.match(html,/data-mobile-route="\$\{k\}"/);assert.match(html,/touch-action:manipulation/);});
