@@ -1,0 +1,12 @@
+PASS: 11 modules × 3 viewport sizes; no horizontal page overflow; navigation leaves data unchanged
+PASS: note/form create and edit with multiple/linked attachments, same client IDs
+Testing replacement
+Replacement saved []
+Link saved []
+PASS: resource replacement preserves ID and parent; safe link-only resource
+PASS: master calendar/forms share records; client switch, browser back, simulated route restoration
+PASS: deleting note preserves linked files, clears association
+PASS: unsupported file rejects entire save, no partial parent record
+PASS: image attachments appear in gallery; compare and local preview; manual cloud action visible
+PASS: dark mode and 200% text accessibility, mobile overview
+PASS: no JavaScript errors; no live service requests. Simulated persistence only.

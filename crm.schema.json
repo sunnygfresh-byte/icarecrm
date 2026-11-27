@@ -212,6 +212,162 @@
           "maxLength": 500000,
           "pattern": "^(?:$|data:image/jpeg;base64,[A-Za-z0-9+/]+={0,2}$)",
           "description": "Optional locally resized JPEG profile photo data URL; empty string removes photo."
+        },
+        "cloudCopy": {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "mime": {
+              "const": "image/webp"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15728640
+            },
+            "consentAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sourceHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revokedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "stale": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "asset",
+            "mime",
+            "size"
+          ],
+          "description": "Optional authenticated cloud reference. Legacy references may lack recorded consent; new uploads require a committed image-specific consent record."
+        },
+        "cloudPending": {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "mime": {
+              "const": "image/webp"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15728640
+            },
+            "consentAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sourceHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revokedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "stale": {
+              "type": "boolean"
+            },
+            "data": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+              "description": "Temporary exact WebP bytes (base64) retained until Cloudinary confirms the upload."
+            }
+          },
+          "required": [
+            "asset",
+            "mime",
+            "size",
+            "consentAt",
+            "sourceHash",
+            "data"
+          ],
+          "description": "Image-specific consent and deterministic pending upload, retained in encrypted local and synchronized workspace for recovery."
+        },
+        "cloudRetired": {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "mime": {
+              "const": "image/webp"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15728640
+            },
+            "consentAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sourceHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revokedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "stale": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "asset",
+            "mime",
+            "size"
+          ],
+          "description": "Optional authenticated cloud reference. Legacy references may lack recorded consent; new uploads require a committed image-specific consent record."
+        },
+        "endDate": {
+          "type": "string"
+        },
+        "activityHistory": {
+          "type": "array",
+          "maxItems": 300,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "at",
+              "type",
+              "description",
+              "recordId"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "at": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "recordId": {
+                "type": "string"
+              }
+            }
+          }
         }
       },
       "required": [
@@ -470,6 +626,21 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 15728640
+            },
+            "consentAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sourceHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revokedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "stale": {
+              "type": "boolean"
             }
           },
           "required": [
@@ -477,7 +648,106 @@
             "mime",
             "size"
           ],
-          "description": "Optional identifier for a compressed Cloudinary copy; original local attachment unchanged."
+          "description": "Optional authenticated cloud reference. Legacy references may lack recorded consent; new uploads require a committed image-specific consent record."
+        },
+        "cloudPending": {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "mime": {
+              "const": "image/webp"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15728640
+            },
+            "consentAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sourceHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revokedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "stale": {
+              "type": "boolean"
+            },
+            "data": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9+/]*={0,2}$",
+              "description": "Temporary exact WebP bytes (base64) retained until Cloudinary confirms the upload."
+            }
+          },
+          "required": [
+            "asset",
+            "mime",
+            "size",
+            "consentAt",
+            "sourceHash",
+            "data"
+          ],
+          "description": "Image-specific consent and deterministic pending upload, retained in encrypted local and synchronized workspace for recovery."
+        },
+        "cloudRetired": {
+          "type": "object",
+          "properties": {
+            "asset": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "mime": {
+              "const": "image/webp"
+            },
+            "size": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 15728640
+            },
+            "consentAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "sourceHash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "revokedAt": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "stale": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "asset",
+            "mime",
+            "size"
+          ],
+          "description": "Optional authenticated cloud reference. Legacy references may lack recorded consent; new uploads require a committed image-specific consent record."
+        },
+        "noteId": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "photoKind": {
+          "enum": [
+            "",
+            "Progress",
+            "Profile",
+            "Other"
+          ]
         }
       },
       "required": [
@@ -596,6 +866,38 @@
         },
         "nextSteps": {
           "type": "string"
+        },
+        "chest": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 300
+        },
+        "hips": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 300
+        },
+        "arm": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 300
+        },
+        "thigh": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 300
         }
       },
       "required": [
