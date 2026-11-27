@@ -21,6 +21,8 @@ with sync_playwright() as p:
     assert page.evaluate('location.hash')=='#/clients/demo-1/overview'
     modules=['overview','contact','calendar','notes','resources','progress','training','forms','photos','privacy','timeline']
     def module(m):
+        if page.evaluate('innerWidth<=800'):
+            page.evaluate("workspaceNavigate(clientId,'hub')")
         page.locator(f'[data-action="wsModule:{m}"]').first.click()
         assert page.evaluate('workspaceModule')==m
     for width in [1440,768,390]:
@@ -60,6 +62,7 @@ with sync_playwright() as p:
     assert page.locator('#view').get_by_text('Workspace appointment',exact=True).count()>=1
     page.evaluate("workspaceGlobal('Journey forms')");assert 'Browser form' in page.locator('#view').inner_text()
     page.evaluate("workspaceNavigate('demo-1','forms')")
+    if page.evaluate('innerWidth<=800'): page.locator('.mobile-top summary').click()
     page.locator('#wsClientSearch').fill('Jordan');page.locator('#wsClientSwitch').select_option('demo-2');assert page.evaluate('clientId')=='demo-2';assert 'Browser form' not in page.locator('#view').inner_text()
     page.go_back();page.wait_for_function("clientId==='demo-1'&&workspaceModule==='forms'")
     page.evaluate("workspaceModule='';workspaceRouteRead=false;render()")

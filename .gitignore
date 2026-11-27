@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+node_modules/
+.wrangler/
+firebase-crm.js
+# Never commit service account key downloads or client exports.
+*service-account*.json
+*service_account*.json
+*credentials*.json
+*private-key*.json
+*before-CSV*.json
+iCare-clients-*.csv

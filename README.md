@@ -1,3 +1,9 @@
+# iCare Fitness CRM V3.2.1 — Mobile Navigation Edition
+
+Start with [DESIGN_STANDARD.md](DESIGN_STANDARD.md), [V3.2.1_PREVIEW_GUIDE.md](V3.2.1_PREVIEW_GUIDE.md), and [REGRESSION_REPORT.md](REGRESSION_REPORT.md). The formal 8px system applies to new design work. V3.2.1 is an undeployed local candidate. No live changes or production deployment are authorized. Older instructions below are historical and must not supersede the current guide, especially any references to production commits or pre-vault storage.
+
+---
+
 # iCare Fitness CRM V3.1.2 — Cloudinary consent-controlled image storage
 
 **Local release candidate; Preview-only testing requires separate approval.** Start with [V3.1.2_PREVIEW_GUIDE.md](V3.1.2_PREVIEW_GUIDE.md) and [REGRESSION_REPORT.md](REGRESSION_REPORT.md). These supersede older image-upload instructions below. The archived deployment settings and security rule templates must not overwrite your live configuration.

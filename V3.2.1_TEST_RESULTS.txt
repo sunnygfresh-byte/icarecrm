@@ -1,0 +1,538 @@
+
+> icare-crm@3.2.1 test
+> node --test --test-concurrency=1 test.mjs firebase-sync.test.mjs webp-upload.test.mjs pages.test.mjs persistent-sync.test.mjs realtime-sync.test.mjs csv.test.mjs reporting.test.mjs vault.test.mjs xlsx.test.mjs vault-adapter.test.mjs session-runtime.test.mjs cloudinary-avatar.test.mjs cloudinary-ui.test.mjs client-workspace.test.mjs mobile-navigation.test.mjs
+
+TAP version 13
+# Subtest: route parser only accepts known modules and opaque bounded identifiers
+ok 1 - route parser only accepts known modules and opaque bounded identifiers
+  ---
+  duration_ms: 2.294163
+  type: 'test'
+  ...
+# Subtest: optional schema extension leaves old workspace byte-equivalent
+ok 2 - optional schema extension leaves old workspace byte-equivalent
+  ---
+  duration_ms: 0.81337
+  type: 'test'
+  ...
+# Subtest: note and form relationships reject cross-client and ambiguous attachment associations
+ok 3 - note and form relationships reject cross-client and ambiguous attachment associations
+  ---
+  duration_ms: 1.047185
+  type: 'test'
+  ...
+# Subtest: website resources permit HTTP(S) only, reject userinfo and executable schemes
+ok 4 - website resources permit HTTP(S) only, reject userinfo and executable schemes
+  ---
+  duration_ms: 1.572139
+  type: 'test'
+  ...
+# Subtest: capacity check counts UTF-8 bytes, rejects over-limit before write
+ok 5 - capacity check counts UTF-8 bytes, rejects over-limit before write
+  ---
+  duration_ms: 29.618121
+  type: 'test'
+  ...
+# Subtest: multi-file note and form attachments retain parent client and unique record IDs
+ok 6 - multi-file note and form attachments retain parent client and unique record IDs
+  ---
+  duration_ms: 1.978808
+  type: 'test'
+  ...
+# Subtest: disallowed file and mismatched image signature reject; canceled vault never attaches bytes
+ok 7 - disallowed file and mismatched image signature reject; canceled vault never attaches bytes
+  ---
+  duration_ms: 1.305456
+  type: 'test'
+  ...
+# Subtest: activity history appends bounded entries and distinguishes reconstructed metadata
+ok 8 - activity history appends bounded entries and distinguishes reconstructed metadata
+  ---
+  duration_ms: 7.972649
+  type: 'test'
+  ...
+# Subtest: new measurement and program date fields validate without changing older records
+ok 9 - new measurement and program date fields validate without changing older records
+  ---
+  duration_ms: 0.920247
+  type: 'test'
+  ...
+# Subtest: server checks committed note/form ownership before consented image upload
+ok 10 - server checks committed note/form ownership before consented image upload
+  ---
+  duration_ms: 9.926379
+  type: 'test'
+  ...
+# Subtest: Cloudinary enforces progress permission for new photograph classification
+ok 11 - Cloudinary enforces progress permission for new photograph classification
+  ---
+  duration_ms: 1.346436
+  type: 'test'
+  ...
+# Subtest: retrieval rejects a cross-client parent, cleanup can still resolve a tracked withdrawn asset
+ok 12 - retrieval rejects a cross-client parent, cleanup can still resolve a tracked withdrawn asset
+  ---
+  duration_ms: 0.962129
+  type: 'test'
+  ...
+# Subtest: avatar: explicit committed consent, upload, reference retrieval and removal
+ok 13 - avatar: explicit committed consent, upload, reference retrieval and removal
+  ---
+  duration_ms: 40.410066
+  type: 'test'
+  ...
+# Subtest: resource: explicit committed consent, upload, reference retrieval and removal
+ok 14 - resource: explicit committed consent, upload, reference retrieval and removal
+  ---
+  duration_ms: 9.670221
+  type: 'test'
+  ...
+# Subtest: wrong record, wrong kind, source changed, revoked or malformed consent fail before Cloudinary
+ok 15 - wrong record, wrong kind, source changed, revoked or malformed consent fail before Cloudinary
+  ---
+  duration_ms: 8.65873
+  type: 'test'
+  ...
+# Subtest: progress permission denied even with image consent; resource association checked
+ok 16 - progress permission denied even with image consent; resource association checked
+  ---
+  duration_ms: 4.21104
+  type: 'test'
+  ...
+# Subtest: revision changes and unauthorized requests fail closed
+ok 17 - revision changes and unauthorized requests fail closed
+  ---
+  duration_ms: 2.258591
+  type: 'test'
+  ...
+# Subtest: retry recovers the same already stored bytes, refuses different or absent bytes
+ok 18 - retry recovers the same already stored bytes, refuses different or absent bytes
+  ---
+  duration_ms: 8.72652
+  type: 'test'
+  ...
+# Subtest: oversized dimensions, invalid RIFF and animation rejected
+ok 19 - oversized dimensions, invalid RIFF and animation rejected
+  ---
+  duration_ms: 3.275741
+  type: 'test'
+  ...
+# Subtest: legacy reference and exact original legacy ID retained; arbitrary asset cannot be fetched
+ok 20 - legacy reference and exact original legacy ID retained; arbitrary asset cannot be fetched
+  ---
+  duration_ms: 5.705044
+  type: 'test'
+  ...
+# Subtest: manual consent cancellation sends no sync or image request
+ok 21 - manual consent cancellation sends no sync or image request
+  ---
+  duration_ms: 9.258695
+  type: 'test'
+  ...
+# Subtest: avatar and resource upload first commit consent, then sync reference
+ok 22 - avatar and resource upload first commit consent, then sync reference
+  ---
+  duration_ms: 6.929479
+  type: 'test'
+  ...
+# Subtest: failed upload retains exact bytes and consent; retry reuses same identifier
+ok 23 - failed upload retains exact bytes and consent; retry reuses same identifier
+  ---
+  duration_ms: 3.510046
+  type: 'test'
+  ...
+# Subtest: unavailable Firebase never sends Cloudinary image, pending local consent retained
+ok 24 - unavailable Firebase never sends Cloudinary image, pending local consent retained
+  ---
+  duration_ms: 2.522891
+  type: 'test'
+  ...
+# Subtest: failed reference sync preserves local cloud reference and existing avatar
+ok 25 - failed reference sync preserves local cloud reference and existing avatar
+  ---
+  duration_ms: 2.438126
+  type: 'test'
+  ...
+# Subtest: removal first commits withdrawal, then deletes, local image retained
+ok 26 - removal first commits withdrawal, then deletes, local image retained
+  ---
+  duration_ms: 2.216559
+  type: 'test'
+  ...
+# Subtest: replacement keeps retired copy until manual cleanup; locked memory and consent controls present
+ok 27 - replacement keeps retired copy until manual cleanup; locked memory and consent controls present
+  ---
+  duration_ms: 3.067604
+  type: 'test'
+  ...
+# Subtest: offline/locked state and workspace limit do not transfer images
+ok 28 - offline/locked state and workspace limit do not transfer images
+  ---
+  duration_ms: 53.109074
+  type: 'test'
+  ...
+# Subtest: same image identifier never creates a pending duplicate or transfers again
+ok 29 - same image identifier never creates a pending duplicate or transfers again
+  ---
+  duration_ms: 4.99003
+  type: 'test'
+  ...
+# Subtest: CSV preserves quotes commas newlines and BOM; malformed CSV rejected
+ok 30 - CSV preserves quotes commas newlines and BOM; malformed CSV rejected
+  ---
+  duration_ms: 2.084123
+  type: 'test'
+  ...
+# Subtest: CSV export only approved fields and escapes formulas and leading zero identifiers
+ok 31 - CSV export only approved fields and escapes formulas and leading zero identifiers
+  ---
+  duration_ms: 0.546066
+  type: 'test'
+  ...
+# Subtest: mapping, dates, options and duplicate identity validation
+ok 32 - mapping, dates, options and duplicate identity validation
+  ---
+  duration_ms: 1.46452
+  type: 'test'
+  ...
+# Subtest: name-only and ambiguous matches blocked; different identifiers targeting same existing client blocked
+ok 33 - name-only and ambiguous matches blocked; different identifiers targeting same existing client blocked
+  ---
+  duration_ms: 0.419008
+  type: 'test'
+  ...
+# Subtest: default skips duplicate, explicit update preserves notes, images, blanks and other record types
+ok 34 - default skips duplicate, explicit update preserves notes, images, blanks and other record types
+  ---
+  duration_ms: 0.501219
+  type: 'test'
+  ...
+# Subtest: browser embedded CSV code matches tested module
+ok 35 - browser embedded CSV code matches tested module
+  ---
+  duration_ms: 4.776454
+  type: 'test'
+  ...
+# Subtest: multi-chunk unicode and avatar data round trip
+ok 36 - multi-chunk unicode and avatar data round trip
+  ---
+  duration_ms: 19.289528
+  type: 'test'
+  ...
+# Subtest: reject oversize and invalid manifests
+ok 37 - reject oversize and invalid manifests
+  ---
+  duration_ms: 66.616055
+  type: 'test'
+  ...
+# Subtest: revision conflict prevents overwrite
+ok 38 - revision conflict prevents overwrite
+  ---
+  duration_ms: 0.243639
+  type: 'test'
+  ...
+# Subtest: mobile entry uses hub, desktop entry retains overview
+ok 39 - mobile entry uses hub, desktop entry retains overview
+  ---
+  duration_ms: 3.124819
+  type: 'test'
+  ...
+# Subtest: mobile routes are recognized while desktop aliases retain legacy modules
+ok 40 - mobile routes are recognized while desktop aliases retain legacy modules
+  ---
+  duration_ms: 0.702496
+  type: 'test'
+  ...
+# Subtest: eight primary modules are unique, including existing program schedule
+ok 41 - eight primary modules are unique, including existing program schedule
+  ---
+  duration_ms: 1.20032
+  type: 'test'
+  ...
+# Subtest: formal 8px mobile tokens and safe-area accessibility exceptions are present
+ok 42 - formal 8px mobile tokens and safe-area accessibility exceptions are present
+  ---
+  duration_ms: 0.472397
+  type: 'test'
+  ...
+# Subtest: dedicated mobile pages reuse original module views with no secondary storage
+ok 43 - dedicated mobile pages reuse original module views with no secondary storage
+  ---
+  duration_ms: 0.350797
+  type: 'test'
+  ...
+# Subtest: public config returns only allowlisted Firebase keys; missing values fail closed
+ok 44 - public config returns only allowlisted Firebase keys; missing values fail closed
+  ---
+  duration_ms: 17.693694
+  type: 'test'
+  ...
+# Subtest: hosted cloud actions require verified coach and same origin
+ok 45 - hosted cloud actions require verified coach and same origin
+  ---
+  duration_ms: 6.718869
+  type: 'test'
+  ...
+# Subtest: hosted WebP signed upload, download and deletion (mock committed consent)
+ok 46 - hosted WebP signed upload, download and deletion (mock committed consent)
+  ---
+  duration_ms: 15.228174
+  type: 'test'
+  ...
+# Subtest: persisted link resumes queued upload after reload
+ok 47 - persisted link resumes queued upload after reload
+  ---
+  duration_ms: 18.647651
+  type: 'test'
+  ...
+# Subtest: offline local edit remains dirty and syncs when online
+ok 48 - offline local edit remains dirty and syncs when online
+  ---
+  duration_ms: 1.081825
+  type: 'test'
+  ...
+# Subtest: transient network failure retries without disabling auto sync
+ok 49 - transient network failure retries without disabling auto sync
+  ---
+  duration_ms: 0.951874
+  type: 'test'
+  ...
+# Subtest: remote conflict preserves local workspace and pauses auto sync
+ok 50 - remote conflict preserves local workspace and pauses auto sync
+  ---
+  duration_ms: 1.108505
+  type: 'test'
+  ...
+# Subtest: local edit during push remains queued against new revision
+ok 51 - local edit during push remains queued against new revision
+  ---
+  duration_ms: 5.844179
+  type: 'test'
+  ...
+# Subtest: unlinked or wrong-account session never uploads automatically
+ok 52 - unlinked or wrong-account session never uploads automatically
+  ---
+  duration_ms: 1.318114
+  type: 'test'
+  ...
+# Subtest: stale browser tab cannot overwrite local data
+ok 53 - stale browser tab cannot overwrite local data
+  ---
+  duration_ms: 0.966776
+  type: 'test'
+  ...
+# Subtest: remember-me uses SDK persistence and restores authentication before syncing
+ok 54 - remember-me uses SDK persistence and restores authentication before syncing
+  ---
+  duration_ms: 0.48843
+  type: 'test'
+  ...
+# Subtest: two devices receive add, edit and delete automatically without duplicate records or echo uploads
+ok 55 - two devices receive add, edit and delete automatically without duplicate records or echo uploads
+  ---
+  duration_ms: 22.650395
+  type: 'test'
+  ...
+# Subtest: fresh empty device receives existing complete workspace, nonempty device does not overwrite itself
+ok 56 - fresh empty device receives existing complete workspace, nonempty device does not overwrite itself
+  ---
+  duration_ms: 1.62749
+  type: 'test'
+  ...
+# Subtest: incoming changes wait while an editor is open, then apply without manual refresh
+ok 57 - incoming changes wait while an editor is open, then apply without manual refresh
+  ---
+  duration_ms: 1.346345
+  type: 'test'
+  ...
+# Subtest: local edit while remote snapshot is downloading cannot be overwritten
+ok 58 - local edit while remote snapshot is downloading cannot be overwritten
+  ---
+  duration_ms: 5.32306
+  type: 'test'
+  ...
+# Subtest: offline save and simultaneous remote edit preserve both and pause
+ok 59 - offline save and simultaneous remote edit preserve both and pause
+  ---
+  duration_ms: 1.966821
+  type: 'test'
+  ...
+# Subtest: acknowledges identical snapshot after a lost upload response without writing duplicates
+ok 60 - acknowledges identical snapshot after a lost upload response without writing duplicates
+  ---
+  duration_ms: 1.886622
+  type: 'test'
+  ...
+# Subtest: listener restarts after error, sign-out unsubscribes, paused device stays unchanged
+ok 61 - listener restarts after error, sign-out unsubscribes, paused device stays unchanged
+  ---
+  duration_ms: 1.310483
+  type: 'test'
+  ...
+# Subtest: incoming data fails validation before replacing local workspace
+ok 62 - incoming data fails validation before replacing local workspace
+  ---
+  duration_ms: 1.114834
+  type: 'test'
+  ...
+# Subtest: live listener excludes cached and pending writes and UI shows global status
+ok 63 - live listener excludes cached and pending writes and UI shows global status
+  ---
+  duration_ms: 0.653664
+  type: 'test'
+  ...
+# Subtest: reporting allowlist excludes medical forms, photo, notes text, contact details and sensitive metrics
+ok 64 - reporting allowlist excludes medical forms, photo, notes text, contact details and sensitive metrics
+  ---
+  duration_ms: 1.086963
+  type: 'test'
+  ...
+# Subtest: atomic spreadsheet requests clear stale rows and use literal strings, preserve other worksheets
+ok 65 - atomic spreadsheet requests clear stale rows and use literal strings, preserve other worksheets
+  ---
+  duration_ms: 0.489783
+  type: 'test'
+  ...
+# Subtest: full mock OAuth signature, Firestore read and Google batch write; no duplicate write on unchanged revision
+ok 66 - full mock OAuth signature, Firestore read and Google batch write; no duplicate write on unchanged revision
+  ---
+  duration_ms: 30.003308
+  type: 'test'
+  ...
+# Subtest: Firestore manifest changing during chunk read retries and never exports mixed revision
+ok 67 - Firestore manifest changing during chunk read retries and never exports mixed revision
+  ---
+  duration_ms: 2.458145
+  type: 'test'
+  ...
+# Subtest: reporting API rejects unauthorized and cross-origin requests before invoking Worker
+ok 68 - reporting API rejects unauthorized and cross-origin requests before invoking Worker
+  ---
+  duration_ms: 1.692106
+  type: 'test'
+  ...
+# Subtest: disabled and paused worker does not send data; persistent status excludes credentials
+ok 69 - disabled and paused worker does not send data; persistent status excludes credentials
+  ---
+  duration_ms: 0.937312
+  type: 'test'
+  ...
+# Subtest: Cloudflare redirect compatibility: authorized coach succeeds with manual mode
+ok 70 - Cloudflare redirect compatibility: authorized coach succeeds with manual mode
+  ---
+  duration_ms: 19.80642
+  type: 'test'
+  ...
+# Subtest: all HTTP redirects fail closed
+ok 71 - all HTTP redirects fail closed
+  ---
+  duration_ms: 2.806008
+  type: 'test'
+  ...
+# Subtest: wrong project, issuer, UID, expired token, cross origin and GET fail before lookup
+ok 72 - wrong project, issuer, UID, expired token, cross origin and GET fail before lookup
+  ---
+  duration_ms: 2.938124
+  type: 'test'
+  ...
+# Subtest: revoked, disabled and mismatched accounts remain denied
+ok 73 - revoked, disabled and mismatched accounts remain denied
+  ---
+  duration_ms: 2.274345
+  type: 'test'
+  ...
+# Subtest: invalid token response and network failure remain denied
+ok 74 - invalid token response and network failure remain denied
+  ---
+  duration_ms: 0.960707
+  type: 'test'
+  ...
+# Subtest: shared Cloudinary authorization uses the same corrected lookup
+ok 75 - shared Cloudinary authorization uses the same corrected lookup
+  ---
+  duration_ms: 0.748945
+  type: 'test'
+  ...
+# PASS: local status authorization, origin guard, legacy upload rejection, signature example
+# Subtest: test.mjs
+ok 12 - test.mjs
+  ---
+  duration_ms: 130.152761
+  type: 'test'
+  ...
+# Subtest: authorized migration atomically replaces plaintext keys, retains all record types and dirty metadata
+ok 77 - authorized migration atomically replaces plaintext keys, retains all record types and dirty metadata
+  ---
+  duration_ms: 157.613996
+  type: 'test'
+  ...
+# Subtest: unauthorized session and failed passphrase never overwrite the legacy workspace
+ok 78 - unauthorized session and failed passphrase never overwrite the legacy workspace
+  ---
+  duration_ms: 3.165338
+  type: 'test'
+  ...
+# Subtest: signout revokes local key and state, unsubscribes, calls SDK logout, prevents direct reads and writes
+ok 79 - signout revokes local key and state, unsubscribes, calls SDK logout, prevents direct reads and writes
+  ---
+  duration_ms: 133.961583
+  type: 'test'
+  ...
+# Subtest: session endpoint refuses missing, wrong-account, cross-origin and revoked tokens; valid coach succeeds
+ok 80 - session endpoint refuses missing, wrong-account, cross-origin and revoked tokens; valid coach succeeds
+  ---
+  duration_ms: 5.791832
+  type: 'test'
+  ...
+# Subtest: vault round trip encrypts all workspace and metadata, nonextractable key and fresh nonce
+ok 81 - vault round trip encrypts all workspace and metadata, nonextractable key and fresh nonce
+  ---
+  duration_ms: 138.013279
+  type: 'test'
+  ...
+# Subtest: wrong passphrase, account, project and tampered ciphertext fail closed
+ok 82 - wrong passphrase, account, project and tampered ciphertext fail closed
+  ---
+  duration_ms: 249.735325
+  type: 'test'
+  ...
+# Subtest: weak passphrase rejected and browser embeds identical crypto implementation
+ok 83 - weak passphrase rejected and browser embeds identical crypto implementation
+  ---
+  duration_ms: 3.113492
+  type: 'test'
+  ...
+# PASS: local binary WebP, committed consent, byte integrity, origin, upload/download/delete
+# Subtest: webp-upload.test.mjs
+ok 15 - webp-upload.test.mjs
+  ---
+  duration_ms: 138.477464
+  type: 'test'
+  ...
+# Subtest: real OOXML package, string cells preserve leading zeros and formula-looking text
+ok 85 - real OOXML package, string cells preserve leading zeros and formula-looking text
+  ---
+  duration_ms: 3.724112
+  type: 'test'
+  ...
+# Subtest: damaged and unsafe workbook archive rejected
+ok 86 - damaged and unsafe workbook archive rejected
+  ---
+  duration_ms: 1.02354
+  type: 'test'
+  ...
+# Subtest: browser embeds the same workbook code and both formats share preview pipeline
+ok 87 - browser embeds the same workbook code and both formats share preview pipeline
+  ---
+  duration_ms: 3.409238
+  type: 'test'
+  ...
+1..87
+# tests 87
+# suites 0
+# pass 87
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2250.755304

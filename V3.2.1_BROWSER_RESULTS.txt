@@ -1,0 +1,6 @@
+PASS: 12 dedicated modules, hub and responsive two-column grid at 320/390/768/800 px; no page overflow
+PASS: native Back/Forward, hub Back, client switch and simulated deep-link restoration
+PASS: desktop aliases, rotation/breakpoint changes, no record mutation during navigation
+PASS: real UI editors for notes and forms, attachments saved under correct fictional client
+PASS: dark mode, 200% text sizing on hub and overview, accessible dock reflows
+PASS: no JavaScript errors or live service requests; simulated storage and authentication only

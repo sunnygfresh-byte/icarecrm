@@ -1,0 +1,23 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import vm from 'node:vm';
+const html=readFileSync(new URL('public/index.html',import.meta.url),'utf8');
+const part=(a,b)=>html.slice(html.indexOf(a),html.indexOf(b,html.indexOf(a)));
+const logic=part('const fb={','async function fetchFirebaseConfig()')+part('function fbLiveIndicator(','function backupView()')+part('function sameLink(','async function commit(');
+function setup({link=true,dirty=true,online=true,remote='r1'}={}){
+ const user={uid:'coach',email:'coach@example.test'},base={uid:'coach',project:'test-project',revision:'r1',auto:true,dirty,blocked:'',lastSync:''};
+ let disk={state:{clients:[{id:'x'}]},version:1,link:link?base:null};let scheduled=[],writes=[],cloud=remote;
+ const sdk={currentUser:()=>user,inspect:async()=>({revision:cloud}),pull:async()=>({revision:cloud,state:{clients:[{id:'remote'}]}}),push:async(s,expected)=>{if(expected!==cloud)throw Object.assign(Error('Cloud workspace changed on another device.'),{code:'crm/conflict'});writes.push(structuredClone(s));cloud='r'+(writes.length+1);return cloud;}};
+ const ctx=vm.createContext({console,structuredClone,clone:structuredClone,validate:()=>{},localVersion:1,localLink:disk.link,ready:true,busy:false,state:disk.state,tab:'Overview',navigator:{onLine:online},location:{protocol:'https:'},document:{addEventListener:()=>{}},window:{addEventListener:()=>{}},$:()=>null,render:()=>{},notice:()=>{},setTimeout:(fn,ms)=>{scheduled.push(ms);return scheduled.length},clearTimeout:()=>{},localTransaction:async fn=>{let next=fn?fn(structuredClone(disk)):structuredClone(disk);if(fn){disk={state:next.state,version:next.version,link:next.link};}return structuredClone(next);},sdk,user});
+ vm.runInContext(logic+';fb.sdk=sdk;fb.user=user;fb.projectId="test-project";fb.observing=true;',ctx);
+ return {ctx,run:code=>vm.runInContext(code,ctx),disk:()=>disk,writes,scheduled,sdk,user,setDisk:x=>{disk=x;}};
+}
+test('persisted link resumes queued upload after reload',async()=>{const h=setup();await h.run('fbPump()');assert.equal(h.writes.length,1);assert.equal(h.disk().link.revision,'r2');assert.equal(h.disk().link.dirty,false);assert.equal(h.disk().link.auto,true);});
+test('offline local edit remains dirty and syncs when online',async()=>{const h=setup({dirty:false,online:false});await h.run('writeDB({clients:[{id:"offline"}]})');await h.run('fbPump()');assert.equal(h.writes.length,0);assert.equal(h.disk().link.dirty,true);h.ctx.navigator.onLine=true;await h.run('fbPump()');assert.equal(h.writes[0].clients[0].id,'offline');assert.equal(h.disk().link.dirty,false);});
+test('transient network failure retries without disabling auto sync',async()=>{const h=setup();h.sdk.push=async()=>{throw Object.assign(Error('Network unavailable'),{code:'unavailable'})};await h.run('fbPump()');assert.equal(h.disk().link.auto,true);assert.equal(h.disk().link.dirty,true);assert.ok(h.scheduled.includes(2000));});
+test('remote conflict preserves local workspace and pauses auto sync',async()=>{const h=setup({remote:'another-device'});await h.run('fbPump()');assert.equal(h.writes.length,0);assert.equal(h.disk().link.dirty,true);assert.equal(h.disk().link.auto,false);assert.match(h.disk().link.blocked,/changed/);assert.equal(h.disk().state.clients[0].id,'x');});
+test('local edit during push remains queued against new revision',async()=>{const h=setup();let complete;h.sdk.push=async()=>new Promise(r=>{complete=r;});const pending=h.run('fbPump()');await new Promise(r=>setImmediate(r));await h.run('writeDB({clients:[{id:"newer"}]})');complete('r2');await pending;assert.equal(h.disk().state.clients[0].id,'newer');assert.equal(h.disk().link.dirty,true);assert.equal(h.disk().link.revision,'r2');});
+test('unlinked or wrong-account session never uploads automatically',async()=>{const a=setup({link:false});await a.run('fbPump()');assert.equal(a.writes.length,0);const b=setup();b.run('fb.user={uid:"other"}');b.sdk.currentUser=()=>({uid:'other'});await b.run('fbPump()');assert.equal(b.writes.length,0);});
+test('stale browser tab cannot overwrite local data',async()=>{const h=setup();h.setDisk({...h.disk(),version:2,state:{clients:[{id:'other-tab'}]}});await assert.rejects(h.run('writeDB({clients:[{id:"stale"}]})'),/another tab/);assert.equal(h.disk().state.clients[0].id,'other-tab');});
+test('remember-me uses SDK persistence and restores authentication before syncing',()=>{assert.match(html,/remember\?browserLocalPersistence:browserSessionPersistence/);assert.match(html,/await auth\.authStateReady\(\)/);assert.match(html,/sdk\.observe\(fbUserChanged\)/);assert.doesNotMatch(html,/await setPersistence\(auth,inMemoryPersistence\)/);});

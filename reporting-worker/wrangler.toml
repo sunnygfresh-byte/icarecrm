@@ -1,0 +1,13 @@
+# Separate Worker. Do not use this file for Pages deployment.
+name = "icare-crm-reporting"
+main = "worker.mjs"
+compatibility_date = "2026-11-25"
+workers_dev = false
+preview_urls = false
+[triggers]
+crons = ["*/5 * * * *"]
+[durable_objects]
+bindings = [{ name = "REPORT_COORDINATOR", class_name = "ReportingCoordinator" }]
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ReportingCoordinator"]

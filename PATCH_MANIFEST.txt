@@ -1,19 +1,18 @@
-iCare Fitness CRM V3.2.0 Client Workspace Edition
-Baseline: iCare_CRM_V3.1.2_Complete_Cloudinary.zip
-All paths repository-relative. No files deleted.
-Apply to an isolated Preview branch only after explicit approval.
-
-ACTION | PATH | SHA-256
-REPLACE | README.md | 00d21b602cd5de5234e46a26cea57ee94399d67cce8aa45f4be846e7b6f3c406
-REPLACE | REGRESSION_REPORT.md | 80ced607f10b18fa0de0728f9c0feae94984b398476517820215be02c3490942
-ADD | V3.2.0_BROWSER_RESULTS.txt | 53264b79fd4ec0220c7c8032e7a76d51dbb02856d1f512ad3a6f01b7a2ae40f5
-ADD | V3.2.0_CHANGELOG.md | eb349560b5f6b0b65a235d93e79e48d7c9a2c6686cbde2e4b86c1c1514054d11
-ADD | V3.2.0_PREVIEW_GUIDE.md | 623c8525f9528cab5474082c1706ac0375d10c35a907bc049dd3354b536b32f8
-ADD | V3.2.0_TEST_RESULTS.txt | 764512dfac6498a445015c676070bfa3d7cd89c2f0a32b9d37e7401adc25ffdb
-ADD | client-workspace.test.mjs | c22ea0e11b76cd878333b606e821491bbac4333d685a6a5129e8870611a8ec57
-REPLACE | crm.schema.json | becc27af8b852ab791b908f9b6714c6f3b67e30d4679d46ef7ebcd10f2224ec4
-REPLACE | lib/cloud-consent.mjs | a0f761af7651de2b926bb304b1d74e254c64e9ce331b189e496e611cd0ab054b
-REPLACE | package.json | fe8ea47e8b42ed9008c9deb299680c0d53ed76c9445a74d229610522912bfc2b
-REPLACE | public/index.html | 1e9436b8962ee2e6671c9e390f26c8bc2c0c80aa4e4db00c52baf68656c3aab6
-ADD | workspace-browser-smoke.py | fa0d52d3152236d657dd196b78eeefefacf4d21315f17bdd66afde9bbcd0527a
-ADD | PATCH_MANIFEST.txt | self (no self digest)
+V3.2.1 Preview-only patch manifest
+Baseline: archived V3.2.0 complete ZIP.
+Add: DESIGN_STANDARD.md
+Replace: README.md
+Replace: REGRESSION_REPORT.md
+Add: V3.2.1_BROWSER_RESULTS.txt
+Add: V3.2.1_CHANGELOG.md
+Add: V3.2.1_DESKTOP_COMPARISON.txt
+Add: V3.2.1_PREVIEW_GUIDE.md
+Add: V3.2.1_TEST_RESULTS.txt
+Add: V3.2.1_WORKSPACE_BROWSER_RESULTS.txt
+Add: mobile-browser-smoke.py
+Add: mobile-navigation.test.mjs
+Replace: package.json
+Replace: public/index.html
+Replace: workspace-browser-smoke.py
+Replace: PATCH_MANIFEST.txt
+No runtime configuration, schema, backend or credentials changed.
