@@ -14,7 +14,10 @@ with sync_playwright() as p:
         page.set_content(src);page.evaluate(init);page.wait_for_function('state.clients.length===3');return page
     page=load(html,390)
     base=page.evaluate('JSON.stringify(state)');page.evaluate("workspaceGlobal('Contacts')");page.locator('[data-client-link="demo-1"]').first.click()
-    assert page.evaluate('location.hash')=='#/clients/demo-1/hub';assert page.locator('.mobile-module-card').count()==8
+    assert page.evaluate('location.hash')=='#/clients/demo-1/hub';assert page.locator('.mobile-module-card').count()==12
+    assert page.locator('.mobile-module-card svg.mobile-icon').count()==12
+    for icon in page.locator('.mobile-module-card svg.mobile-icon').all():
+        assert icon.is_visible() and icon.bounding_box()['width']==32
     def route(m):
         page.wait_for_function(f"workspaceModule==='{m}'")
     def hub():
