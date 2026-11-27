@@ -16,6 +16,7 @@ with sync_playwright() as p:
     base=page.evaluate('JSON.stringify(state)');page.evaluate("workspaceGlobal('Contacts')");page.locator('[data-client-link="demo-1"]').first.click()
     assert page.evaluate('location.hash')=='#/clients/demo-1/hub';assert page.locator('.mobile-module-card').count()==12
     assert page.locator('.mobile-module-card svg.mobile-icon').count()==12
+    assert page.locator('a.mobile-module-card[href^="#/clients/"]').count()==12
     for icon in page.locator('.mobile-module-card svg.mobile-icon').all():
         assert icon.is_visible() and icon.bounding_box()['width']==32
     def route(m):
@@ -36,7 +37,8 @@ with sync_playwright() as p:
             open_module(m)
             if m=='programs': assert '16-week training calendar' in page.locator('.mobile-content').inner_text() and 'Exercise and session history' not in page.locator('.mobile-content').inner_text()
             if m=='training': assert 'Exercise and session history' in page.locator('.mobile-content').inner_text() and '16-week training calendar' not in page.locator('.mobile-content').inner_text()
-    print('PASS: 12 dedicated modules, hub and responsive two-column grid at 320/390/768/800 px; no page overflow')
+    page.set_viewport_size({'width':390,'height':844});hub();page.evaluate('cloudWorking=true');page.locator('a[data-mobile-route="photos"]').click();route('photos');page.evaluate('cloudWorking=false');hub()
+    print('PASS: 12 dedicated modules, hub and responsive two-column grid at 320/390/768/800 px; no page overflow; read-only module navigation during image activity')
     page.set_viewport_size({'width':390,'height':844});hub();open_module('notes');page.go_back();route('hub');page.go_forward();route('notes');hub();route('hub')
     open_module('programs');page.evaluate("workspaceModule='';workspaceRouteRead=false;render()");route('programs');assert page.evaluate('clientId')=='demo-1'
     page.locator('.mobile-top summary').click();page.locator('#wsClientSearch').fill('Jordan');page.locator('#wsClientSwitch').select_option('demo-2');assert page.evaluate('clientId')=='demo-2';route('programs');page.go_back();page.wait_for_function("clientId==='demo-1'&&workspaceModule==='programs'")
